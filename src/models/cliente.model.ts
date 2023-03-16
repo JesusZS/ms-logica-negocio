@@ -3,7 +3,7 @@ import {Entity, model, property} from '@loopback/repository';
 @model()
 export class Cliente extends Entity {
   @property({
-    type: 'string',
+    type: 'number',
     id: true,
     generated: true,
   })
@@ -48,7 +48,6 @@ export class Cliente extends Entity {
     required: true,
   })
   Direccion: string;
-
 
   constructor(data?: Partial<Cliente>) {
     super(data);

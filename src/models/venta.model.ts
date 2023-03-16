@@ -3,7 +3,7 @@ import {Entity, model, property} from '@loopback/repository';
 @model()
 export class Venta extends Entity {
   @property({
-    type: 'string',
+    type: 'number',
     id: true,
     generated: true,
   })
@@ -32,7 +32,6 @@ export class Venta extends Entity {
     required: true,
   })
   Notificada: boolean;
-
 
   constructor(data?: Partial<Venta>) {
     super(data);
