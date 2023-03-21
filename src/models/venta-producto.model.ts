@@ -7,7 +7,7 @@ export class VentaProducto extends Entity {
     id: true,
     generated: true,
   })
-  id?: string;
+  id?: number;
 
   @property({
     type: 'string',

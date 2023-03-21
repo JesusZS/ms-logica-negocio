@@ -7,13 +7,13 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
   response,
 } from '@loopback/rest';
@@ -23,7 +23,7 @@ import {ClienteRepository} from '../repositories';
 export class ClienteController {
   constructor(
     @repository(ClienteRepository)
-    public clienteRepository : ClienteRepository,
+    public clienteRepository: ClienteRepository,
   ) {}
 
   @post('/cliente')
@@ -52,9 +52,7 @@ export class ClienteController {
     description: 'Cliente model count',
     content: {'application/json': {schema: CountSchema}},
   })
-  async count(
-    @param.where(Cliente) where?: Where<Cliente>,
-  ): Promise<Count> {
+  async count(@param.where(Cliente) where?: Where<Cliente>): Promise<Count> {
     return this.clienteRepository.count(where);
   }
 
@@ -106,7 +104,8 @@ export class ClienteController {
   })
   async findById(
     @param.path.number('id') id: number,
-    @param.filter(Cliente, {exclude: 'where'}) filter?: FilterExcludingWhere<Cliente>
+    @param.filter(Cliente, {exclude: 'where'})
+    filter?: FilterExcludingWhere<Cliente>,
   ): Promise<Cliente> {
     return this.clienteRepository.findById(id, filter);
   }

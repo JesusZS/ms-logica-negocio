@@ -5,7 +5,7 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
-  import {
+import {
   del,
   get,
   getModelSchemaRef,
@@ -15,17 +15,13 @@ import {
   post,
   requestBody,
 } from '@loopback/rest';
-import {
-Venta,
-VentaProducto,
-Producto,
-} from '../models';
+import {Producto, Venta} from '../models';
 import {VentaRepository} from '../repositories';
 
 export class VentaProductoController {
   constructor(
     @repository(VentaRepository) protected ventaRepository: VentaRepository,
-  ) { }
+  ) {}
 
   @get('/ventas/{id}/productos', {
     responses: {
@@ -40,7 +36,7 @@ export class VentaProductoController {
     },
   })
   async find(
-    @param.path.string('id') id: string,
+    @param.path.number('id') id: number,
     @param.query.object('filter') filter?: Filter<Producto>,
   ): Promise<Producto[]> {
     return this.ventaRepository.productos(id).find(filter);
@@ -55,7 +51,7 @@ export class VentaProductoController {
     },
   })
   async create(
-    @param.path.string('id') id: typeof Venta.prototype.id,
+    @param.path.number('id') id: typeof Venta.prototype.id,
     @requestBody({
       content: {
         'application/json': {
@@ -65,7 +61,8 @@ export class VentaProductoController {
           }),
         },
       },
-    }) producto: Omit<Producto, 'id'>,
+    })
+    producto: Omit<Producto, 'id'>,
   ): Promise<Producto> {
     return this.ventaRepository.productos(id).create(producto);
   }
@@ -79,7 +76,7 @@ export class VentaProductoController {
     },
   })
   async patch(
-    @param.path.string('id') id: string,
+    @param.path.number('id') id: number,
     @requestBody({
       content: {
         'application/json': {
@@ -88,7 +85,8 @@ export class VentaProductoController {
       },
     })
     producto: Partial<Producto>,
-    @param.query.object('where', getWhereSchemaFor(Producto)) where?: Where<Producto>,
+    @param.query.object('where', getWhereSchemaFor(Producto))
+    where?: Where<Producto>,
   ): Promise<Count> {
     return this.ventaRepository.productos(id).patch(producto, where);
   }
@@ -102,8 +100,9 @@ export class VentaProductoController {
     },
   })
   async delete(
-    @param.path.string('id') id: string,
-    @param.query.object('where', getWhereSchemaFor(Producto)) where?: Where<Producto>,
+    @param.path.number('id') id: number,
+    @param.query.object('where', getWhereSchemaFor(Producto))
+    where?: Where<Producto>,
   ): Promise<Count> {
     return this.ventaRepository.productos(id).delete(where);
   }

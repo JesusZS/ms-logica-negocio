@@ -15,16 +15,14 @@ import {
   post,
   requestBody,
 } from '@loopback/rest';
-import {
-  Cliente,
-  Venta,
-} from '../models';
+import {Cliente, Venta} from '../models';
 import {ClienteRepository} from '../repositories';
 
 export class ClienteVentaController {
   constructor(
-    @repository(ClienteRepository) protected clienteRepository: ClienteRepository,
-  ) { }
+    @repository(ClienteRepository)
+    protected clienteRepository: ClienteRepository,
+  ) {}
 
   @get('/clientes/{id}/ventas', {
     responses: {
@@ -39,7 +37,7 @@ export class ClienteVentaController {
     },
   })
   async find(
-    @param.path.string('id') id: string,
+    @param.path.number('id') id: number,
     @param.query.object('filter') filter?: Filter<Venta>,
   ): Promise<Venta[]> {
     return this.clienteRepository.compras(id).find(filter);
@@ -54,18 +52,19 @@ export class ClienteVentaController {
     },
   })
   async create(
-    @param.path.string('id') id: typeof Cliente.prototype.id,
+    @param.path.number('id') id: typeof Cliente.prototype.id,
     @requestBody({
       content: {
         'application/json': {
           schema: getModelSchemaRef(Venta, {
             title: 'NewVentaInCliente',
             exclude: ['id'],
-            optional: ['clienteId']
+            optional: ['clienteId'],
           }),
         },
       },
-    }) venta: Omit<Venta, 'id'>,
+    })
+    venta: Omit<Venta, 'id'>,
   ): Promise<Venta> {
     return this.clienteRepository.compras(id).create(venta);
   }
@@ -79,7 +78,7 @@ export class ClienteVentaController {
     },
   })
   async patch(
-    @param.path.string('id') id: string,
+    @param.path.number('id') id: number,
     @requestBody({
       content: {
         'application/json': {
@@ -102,7 +101,7 @@ export class ClienteVentaController {
     },
   })
   async delete(
-    @param.path.string('id') id: string,
+    @param.path.number('id') id: number,
     @param.query.object('where', getWhereSchemaFor(Venta)) where?: Where<Venta>,
   ): Promise<Count> {
     return this.clienteRepository.compras(id).delete(where);

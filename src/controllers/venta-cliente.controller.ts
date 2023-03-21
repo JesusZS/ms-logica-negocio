@@ -1,22 +1,13 @@
-import {
-  repository,
-} from '@loopback/repository';
-import {
-  param,
-  get,
-  getModelSchemaRef,
-} from '@loopback/rest';
-import {
-  Venta,
-  Cliente,
-} from '../models';
+import {repository} from '@loopback/repository';
+import {get, getModelSchemaRef, param} from '@loopback/rest';
+import {Cliente, Venta} from '../models';
 import {VentaRepository} from '../repositories';
 
 export class VentaClienteController {
   constructor(
     @repository(VentaRepository)
     public ventaRepository: VentaRepository,
-  ) { }
+  ) {}
 
   @get('/ventas/{id}/cliente', {
     responses: {
@@ -31,7 +22,7 @@ export class VentaClienteController {
     },
   })
   async getCliente(
-    @param.path.string('id') id: typeof Venta.prototype.id,
+    @param.path.number('id') id: typeof Venta.prototype.id,
   ): Promise<Cliente> {
     return this.ventaRepository.cliente(id);
   }

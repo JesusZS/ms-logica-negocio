@@ -1,6 +1,6 @@
-import {Entity, model, property, hasMany} from '@loopback/repository';
-import {Venta} from './venta.model';
+import {Entity, hasMany, model, property} from '@loopback/repository';
 import {VentaProducto} from './venta-producto.model';
+import {Venta} from './venta.model';
 
 @model()
 export class Producto extends Entity {
@@ -9,7 +9,7 @@ export class Producto extends Entity {
     id: true,
     generated: true,
   })
-  id?: string;
+  id?: number;
 
   @property({
     type: 'string',
